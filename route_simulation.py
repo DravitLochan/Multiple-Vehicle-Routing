@@ -47,9 +47,9 @@ class Dispatcher(object):
     Class responsible for moving trucks and tracking targets
     """
 
-    def __init__(self, a):
+    def __init__(self, num_of_nodes):
         self.trucks = [Truck("RED"), Truck("GREEN")]
-        self.targets = list(set([Target() for i in range(a)]))
+        self.targets = list(set([Target() for i in range(num_of_nodes)]))
         self.job_complete = False
 
     def move_trucks(self):
@@ -149,9 +149,9 @@ def main():
     2. Creates an instance of the Plot class.
     3. Move trucks towards targets until all targets have been reached.
     """
-    a = int(input("Enter the number of cities to be traversed : "))
+    num_of_nodes = int(input("Enter the number of cities to be traversed : "))
     random.seed(1)
-    d = Dispatcher(a)
+    d = Dispatcher(num_of_nodes)
     p = Plot(d)
 
     while d.job_complete is False:

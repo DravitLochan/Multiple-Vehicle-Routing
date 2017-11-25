@@ -3,8 +3,8 @@ from math import sqrt
 import numpy as np
 import matplotlib.pyplot as plt
 
-class Truck(object):
 
+class Truck(object):
     def __init__(self, name):
         self.name = name
         self.x = float(random.randint(0, 40))
@@ -34,21 +34,22 @@ class Truck(object):
             self.x += (self.target.x - self.x) * .2
             self.y += (self.target.y - self.y) * .2
 
-class Target(object):
 
+class Target(object):
     def __init__(self, reached=False):
         self.x = float(random.randint(0, 40))
         self.y = float(random.randint(0, 40))
         self.reached = reached
+
 
 class Dispatcher(object):
     """
     Class responsible for moving trucks and tracking targets
     """
 
-    def __init__(self):
+    def __init__(self, a):
         self.trucks = [Truck("RED"), Truck("GREEN")]
-        self.targets = list(set([Target() for i in range(20)]))
+        self.targets = list(set([Target() for i in range(a)]))
         self.job_complete = False
 
     def move_trucks(self):
@@ -86,6 +87,7 @@ class Dispatcher(object):
             move[0].target = move[1]
             move[0].drive_to_target()
 
+
 class Plot(object):
     """
     Class responsible for plotting the movement of Trucks and Targets
@@ -103,14 +105,17 @@ class Plot(object):
         self.ax.set_ylim(0, 40)
 
         # Trucks represented by points
-        self.points_red, = self.ax.plot(self.dispatch.trucks[0].x, self.dispatch.trucks[0].y, color='red', marker='^', linestyle='None')
+        self.points_red, = self.ax.plot(self.dispatch.trucks[0].x, self.dispatch.trucks[0].y, color='red', marker='^',
+                                        linestyle='None')
 
-        self.points_green, = self.ax.plot(self.dispatch.trucks[1].x, self.dispatch.trucks[1].y, color='green', marker='^', linestyle='None')
+        self.points_green, = self.ax.plot(self.dispatch.trucks[1].x, self.dispatch.trucks[1].y, color='green',
+                                          marker='^', linestyle='None')
 
         # Targets represented by points.
         targets_x_coordinates = [target.x for target in self.dispatch.targets]
         targets_y_coordinates = [target.y for target in self.dispatch.targets]
-        self.points_targets_unreached, = self.ax.plot(targets_x_coordinates, targets_y_coordinates, color="blue", marker='o', linestyle='None')
+        self.points_targets_unreached, = self.ax.plot(targets_x_coordinates, targets_y_coordinates, color="blue",
+                                                      marker='o', linestyle='None')
 
         # No completed targets initially
         self.points_targets_reached, = self.ax.plot([], [], color="pink", marker='o', linestyle='None')
@@ -137,19 +142,21 @@ class Plot(object):
         # Pause for capture animation
         plt.pause(0.01)
 
+
 def main():
     """
     1. Creates an instance of the Dispatcher class.
     2. Creates an instance of the Plot class.
     3. Move trucks towards targets until all targets have been reached.
     """
-
+    a = int(input("Enter the number of cities to be traversed : "))
     random.seed(1)
-    d = Dispatcher()
+    d = Dispatcher(a)
     p = Plot(d)
 
     while d.job_complete is False:
         d.move_trucks()
         p.update()
+
 
 main()

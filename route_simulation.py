@@ -1,5 +1,7 @@
 import random
 from math import sqrt
+from time import sleep
+
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -105,8 +107,8 @@ class Plot(object):
         self.ax.set_ylim(0, 40)
 
         # Trucks represented by points
-        self.points_red, = self.ax.plot(self.dispatch.trucks[0].x, self.dispatch.trucks[0].y, color='red', marker='^',
-                                        linestyle='None')
+        self.points_red, = self.ax.plot(self.dispatch.trucks[0].x, self.dispatch.trucks[0].y, color='red', marker='*',
+                                        linestyle='none')
 
         self.points_green, = self.ax.plot(self.dispatch.trucks[1].x, self.dispatch.trucks[1].y, color='green',
                                           marker='^', linestyle='None')
@@ -157,6 +159,6 @@ def main():
     while d.job_complete is False:
         d.move_trucks()
         p.update()
-
+    sleep(60)
 
 main()
